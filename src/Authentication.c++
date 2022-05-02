@@ -14,6 +14,7 @@
 using namespace std;
 
 string email, password, verif;
+char rwwf;
 int check = 0;
 
 void login(){
@@ -27,16 +28,31 @@ void login(){
 
     if(email == "Admin" && password == "Admin")
     {
-        cout << "You are an admin [function()]" << endl;
+        cout << "You are an admin"<< endl;
+        //inventory();
         return;
     }
 
-    ifstream rf("Auth.txt");
-    while(getline(rf, check_email,' ')){
-        if(check_email.compare(email)==0)
+    // Ahmad from here!
+    ifstream rf;
+    rf.open("Auth.txt", ios::in);
+    if(!rf)
+    {
+        cout << endl;
+        cerr << "*****************************************" << endl;
+        cerr << "*        The file doesn't exists!       *" << endl;
+        cerr << "*****************************************"<< endl;
+        cout << endl;
+    }
+
+    rwwf = rf.get();
+
+    while(rf.good()){
+        // cout << rwwf << endl;*/
+        rwwf = rf.get();
+        if(rwwf.)
         {
-            cout << email << endl;
-            break;
+            cout << " YES" << endl;
         }
     }
 }
@@ -51,9 +67,9 @@ void reg()
     if(password.length() < 8)
     {
         cout << endl;
-        cout << "*****************************************" << endl;
+        cerr << "*****************************************" << endl;
         cerr << "*  Please input more than 8 characters  *" << endl;
-        cout << "*****************************************"<< endl;
+        cerr << "*****************************************"<< endl;
         cout << endl;
         return;
     }
@@ -63,9 +79,9 @@ void reg()
     if(password.compare(verif) != 0 ){
 
         cout << endl;
-        cout << "********************************" << endl;
-        cerr << "*  The passwords didn't match!  *" << endl;
-        cout << "********************************"<< endl;
+        cerr << "********************************" << endl;
+        cerr << "*  The passwords didn't match! *" << endl;
+        cerr << "********************************"<< endl;
         cout << endl;
         return;
     }
@@ -77,14 +93,14 @@ void reg()
  
         ofstream wf;
         wf.open("Auth.txt", ios::app);
-        wf<< email<<" " << password<<endl;
+        wf << email << " " << password << endl;
         wf.close();
 
     }
     else{
         ofstream wf("Auth.txt");
-        wf << "email" << " " << "password" << endl; // Header
-        wf << email << " " << password << endl; // Bottom
+        wf << "email" <<  " " << "password" << endl; // Header
+        wf <<  email << " " << password << endl; // Bottom
         wf.close();
         cout << "Your file has been created"<< endl;
     }

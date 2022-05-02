@@ -1,11 +1,8 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
-#ifndef _GENERAL_H
-#define _GENERAL_H
-
-void login();
-void reg();
+using namespace std;
 
 class Inventory
 {
@@ -18,7 +15,7 @@ class Inventory
     void inventory();
     void add();
     void remove();
+    
 
-};
 
-#endif
+}
