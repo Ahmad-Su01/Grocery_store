@@ -4,26 +4,30 @@
 
 using namespace std;
 
-
 class Inventory
 {
     private:
         int id;
         float price;
         string product_name ;
+        float quantity;
 
     public:
         void get_data(){
 
-            cout<<"Id:"<<endl;
+            cout<<"Id: ";
             cin>>id;
+            cout<<endl;
 
-            cout<<"Name:"<<endl;
+            cout<<"Name: ";
             cin>>product_name;
-
-            cout<<"Price:"<<endl;
+            cout<<endl;
+            cout<<"Price: ";
             cin>>price;
-
+            cout<<endl;
+            cout<<"Quantity: ";
+            cin>>quantity;
+            cout<<endl;
         };
 
         void display_data(){
@@ -31,6 +35,8 @@ class Inventory
             cout<<"Id: "<< id<<endl;
             cout<<"Name: "<< product_name <<endl;
             cout<<"Product price: "<< price <<endl;
+            cout<<"Quantity: "<< quantity <<endl;
+
 
         }
 
@@ -46,6 +52,11 @@ class Inventory
             return price;
 
         };
+        float get_quantity(){
+
+            return quantity;
+
+        };
         string get_name(){
 
             return product_name;
@@ -58,13 +69,25 @@ fstream f;
 Inventory item1;
 
 void add_item(){
+    int n;
+
+    cout<<"How many items would you like to add?"<<endl;
+    cin>>n;
 
     f.open("items.txt", ios::out |ios::app );
-    item1.get_data();
-    f.write( (char*)&item1, sizeof(item1));
+
+    for(int i = 0; i < n; i++)
+    {
+        item1.get_data();
+        f.write( (char*)&item1, sizeof(item1));
+        cout<<"---------Item added successfully---------"<<endl;
+        cout<<endl;
+        cout<<endl;
+
+    }
 
     f.close();
-    cout<<"Item saved in file"<<endl;
+    //cout<<"--------Item/Items saved in file--------"<<endl;
 
 }
 
@@ -82,7 +105,6 @@ void display_items(){
 
     f.close();
 }
-
 void display_sp(){
 
     int n;
@@ -105,7 +127,8 @@ void display_sp(){
 
 }
 
-void update_item(){
+
+void modify_item(){
 
     int id, found = 0;
     cout<<"enter product id to modify: ";
@@ -128,6 +151,41 @@ void update_item(){
     }
     f.close();
     if(found == 0){
-        cout<<"------Product not found------"<<endl;
+        cout<<"------Product not found"<<endl;
     }
+}
+
+void delete_item(){
+
+    int id;
+    int found = 0;
+    cout<<"Enter product id to remove: ";
+    cin>>id;
+    f.open("items.txt", ios::out | ios::in);
+    fstream f2;
+    f2.open("temp.txt", ios::out);
+    f.seekg(0, ios::beg);
+     while(f.read((char*)&item1, sizeof(item1))){
+
+         if(item1.get_id() != id){
+
+            f2.write((char*)&item1, sizeof(item1));
+
+         }
+         if(item1.get_id() == id){
+            found = 1;
+         }
+     }
+     f2.close();
+     f.close();
+
+     remove("items.txt");
+     rename("temp.txt", "items.txt");
+
+     if(found){
+        cout<<"------Product removed-------"<<endl;
+     }else{
+        cout<<"-------Product not found-------"<<endl;
+     }
+
 }

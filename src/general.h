@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 #ifndef _GENERAL_H
 #define _GENERAL_H
 
@@ -9,15 +11,15 @@ void reg();
 void finding_pass();
 void add_item();
 void display_items();
-void update_item()
+void update_item();
+void delete_item();
 
 class Inventory
 {
     private:
         int id;
         float price;
-        string product_name ;
-
+        string product_name;
     public:
         void get_data();
         void display_data();
