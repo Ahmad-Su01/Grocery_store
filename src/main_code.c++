@@ -10,6 +10,9 @@ int main()
 
     while(true )
     {
+        system("CLS");
+        cout << "\t\tWelcome at the Grocery Store" <<endl;
+        cout << "\t\t Please choose a valid option" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
         cout << "3. Forgot password" << endl;
@@ -21,16 +24,25 @@ int main()
 
         switch(num)
         {
-            case 1: system("CLS");login(); break;
+            case 1: 
+                system("CLS");
+                cout << "\t\t Welcome at the Login" <<endl;
+                cout << "\t\tInput the required credentails!" << endl;
+                login(); break;
             case 2: 
-            system("CLS");
-            cout << "\t\t Welcome at the Register" <<endl;
-            cout << "\t\tInput the required credentails!" << endl;
-            reg(); break;
-            case 3: system("CLS");finding_pass(); break;
-            case 4: exit(0); break;
-            default: cout << "Proivde with a valid option" << endl;
-            break;
+                system("CLS");
+                cout << "\t\t Welcome at the Register" <<endl;
+                cout << "\t\tInput the required credentails!" << endl;
+                reg(); break;
+            case 3: 
+                system("CLS");
+                cout << "\t\t Forgot the password?" <<endl;
+                cout << "\t\tInput the required credentails!" << endl;
+                finding_pass(); break;
+            case 4: 
+                system("CLS");exit(0); break;
+            default: 
+                cout << "Proivde a valid option" << endl; break;
         }
     }
     

@@ -21,30 +21,34 @@ void login(){
 
     string check_email, check_password;
     
-    cout << "Please enter your email: ";
+    cout << "\nEmail: ";
     cin >> email ;
     if(email == "exit")
     {
-        return login();
+        system("CLS");
+        return;
     }
     if(email == "email")
     {
         system("CLS");
-        cout << "The email doesn't exist";
+        cout << "The email doesn't exist!" << endl;
+        cout << "Try again! or exit from the login page"<<endl;
+        cout << "by writting exit either in email or in password" << endl;
         return login();
     }
-    cout<<"Please enter your password: ";
+    cout<<"Password: ";
     cin >> password;
     if(password == "exit")
     {
-        return login();
+        system("CLS");
+        return;
     }
 
     if(email == "Admin" && password == "Admin")
     {
         system("CLS");
         cout << "You are an admin"<< endl;
-        //inventory();
+        automation();
         return;
     }
 
@@ -95,6 +99,12 @@ void reg()
 
     cout <<"\nEmail address: ";
     cin >> email;
+    if(email == "exit")
+    {
+        system("CLS");
+        return;
+    }
+
     if(!is_email_valid(email))
     {
         system("CLS");
@@ -116,13 +126,8 @@ void reg()
             return reg();
         }
     }
-    if(email == "exit")
-    {
-        system("CLS");
-        return;
-    }
 
-    cout << "password:";
+    cout << "Password: ";
     cin >> password;
     if(password == "exit")
     {
@@ -139,7 +144,7 @@ void reg()
         cout << endl;
         return reg();
     }
-    cout <<"Password again"<<endl;
+    cout <<"Retry Password: ";
     cin >> verif;
 
     if(password.compare(verif) != 0 ){
@@ -152,7 +157,7 @@ void reg()
         return reg();
     }
 
-    cout<<"Succesfully registerd"<<endl;
+    // cout<<"Succesfully registerd"<<endl;
 
     if((_access("Auth.txt", 0)) != -1){
         cout << "The file exists" << endl;
@@ -182,6 +187,7 @@ void finding_pass()
     cin >> email;
     if(email == "exit")
     {
+        system("CLS");
         return;
     }
 
@@ -199,7 +205,7 @@ void finding_pass()
     if(count == 1)
     {
         system("CLS");
-        cout << "Your password is: " << check_pass << endl;
+        cout << "Your password is: " << check_pass << "\n" << endl;
         return;
     }
     else

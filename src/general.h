@@ -6,9 +6,13 @@ using namespace std;
 #ifndef _GENERAL_H
 #define _GENERAL_H
 
+// Authentication
 void login();
 void reg();
 void finding_pass();
+
+// The store
+void automation();
 void add_item();
 void display_items();
 void update_item();
