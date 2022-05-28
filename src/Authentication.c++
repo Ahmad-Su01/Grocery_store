@@ -169,7 +169,7 @@ void reg()
         system("CLS");
     }
     else{
-        ofstream wf("Auth.txt");
+        ofstream wf("Auth.txt");// Creates the file
         wf << "email" <<  " " << "password" << endl; // Header
         wf <<  email << " " << password << endl; // Bottom
         wf.close();

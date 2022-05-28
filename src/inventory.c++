@@ -3,13 +3,16 @@
 #include <fstream>
 #include "general.h"
 
+#include <io.h>
+
 using namespace std;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // I don't get it. Why you created a class Inventory here if
 // we have one made in general.h ??
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+// In general.h is only the prototype. You have to declare it there to work. And here is the implementation. OK!
+// 
 class Inventory
 {
     private:
@@ -19,6 +22,12 @@ class Inventory
         float quantity;
 
     public:
+        void add_item();
+        void display_items();
+        void display_sp();
+        void modify_item();
+        void delete_item();
+
         void get_data(){
 
             cout<<"Id: ";
@@ -45,8 +54,6 @@ class Inventory
             cout<<"Quantity: "<< quantity <<endl;
         }
 
-        void remove();
-
         int get_id(){
             return id;
         };
@@ -64,15 +71,15 @@ class Inventory
         }
 };
 
-fstream f;
 Inventory item1;
 
 // My implementation
 void automation()
 {
-    int n;
+    Inventory m;
+    int n, choice = 1;
 
-    while(true)
+    while(choice)
     {
         cout << "Choose a valid option" << endl;
         cout << "1. Add item" << endl;
@@ -83,51 +90,85 @@ void automation()
         cin >> n;
 
         switch(n){
-            case 1: system("CLS"); add_item(); break;
-            case 2: system("CLS"); display_items(); break;
-            case 3: system("CLS"); display_sp(); break;
-            case 4: system("CLS"); modify_item(); break;
-            case 5: system("CLS"); delete_item(); break;
+            case 1: system("CLS"); m.add_item(); break;
+            case 2: system("CLS"); m.display_items(); break;
+            case 3: system("CLS"); m.display_sp(); break;
+            case 4: system("CLS"); m.modify_item(); break;
+            case 5: system("CLS"); m.delete_item(); break;
+            case 6: system("CLS"); choice = 0;break; 
             default: cout << "The option is not valid!" << endl; break;
         }
     }
 }
 
 // Your implementation
-void add_item(){
+void Inventory::add_item(){
     int n;
+    ofstream wf;
 
     cout<<"How many items would you like to add?"<<endl;
     cin>>n;
+    // Ahmad Method
+    if((_access("items.txt", 0)) != -1){
+        // The file exists and appends
+        cout << "The file exists" << endl;
 
-    f.open("items.txt", ios::out |ios::app );
-
-    for(int i = 0; i < n; i++)
-    {
-        item1.get_data();
-        f.write( (char*)&item1, sizeof(item1));
-        cout<<"---------Item added successfully---------"<<endl;
-        cout<<endl;
-        cout<<endl;
+        wf.open("items.txt", ios::app);
+        while(n != 0)
+        {
+            item1.get_data();
+            wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
+            n--;
+            cout<<"---------Item added successfully---------"<<endl;
+            cout<<endl;
+            cout<<endl;
+        }
+        wf.close();
+        system("CLS");
     }
-    f.close();
-    //cout<<"--------Item/Items saved in file--------"<<endl;
+    // Creatres the if not exists
+    else{
+        ofstream wf("items.txt");
+        
+        while(n != 0)
+        {
+            item1.get_data();
+            wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
+            n--;
+        }
+        wf.close();
+        cout << "Your file has been created"<< endl;
+        system("CLS");
+    }
 }
 
-void display_items(){
+void Inventory::display_items(){
+    int id;
+    string name;
+    float price;
+    int quantity;
+    
     cout<<"----------- All items -----------"<<endl;
-
+    
+    ifstream f;
     f.open("items.txt", ios::in);
     f.seekg(0);
 
-    while(f.read((char*)&item1, sizeof(item1)) ){
-        item1.display_data();
+    while(f>>id>>name>>price>>quantity){
+        cout<<"Id: "<<id<<" - ";
+        cout<<"Name: "<< name<<" - ";
+        cout<<"Price: "<<price<<" - ";
+        cout<<"Quantity: "<<quantity<<endl;
+        
+        //item1.display_data();
         cout<<"-------------------"<<endl;
     }
     f.close();
 }
 
-void display_sp(){
+void Inventory::display_sp(){
+
+    ifstream f;
 
     int n, flag = 0;
     cout<<"Enter the product id:"<<endl;
@@ -149,7 +190,9 @@ void display_sp(){
 
 }
 
-void modify_item(){
+void Inventory::modify_item(){
+
+    ifstream f;
 
     int id, found = 0;
 
@@ -161,16 +204,15 @@ void modify_item(){
     while(f.read((char*)&item1, sizeof(item1))){
         if(item1.get_id() == id){
             item1.display_data();
-            cout<<"Please enter new data"<<endl;
-            item1.get_data();
+            cout<<"Please enter new data:\n" << endl;
+            item1.get_data(); // Inputing Data
 
             int pos = -1*((int)sizeof(item1));
             f.seekp(pos, ios::cur);
             f.write((char*)&item1, sizeof(item1));
 
             found = 1;
-            cout<<"Item updated";
-
+            cout<<"Item " << item1.get_name() << " updated" << endl;
         }
     }
     f.close();
@@ -179,19 +221,15 @@ void modify_item(){
     }
 }
 
-void delete_item(){
+void Inventory::delete_item(){
 
     int id;
     int found = 0;
 
-    cout<<"Enter product id to remove: ";
-    cin>>id;
-
-    f.open("items.txt", ios::out | ios::in);
-    fstream f2;
-
-    f2.open("temp.txt", ios::out);
-    f.seekg(0, ios::beg);
+    ifstream f;
+    ofstream f2;    
+    f2.open("temp.txt",ios::out);
+    f.seekgetline(f, );
     
     while(f.read((char*)&item1, sizeof(item1))){
 
@@ -210,6 +248,7 @@ void delete_item(){
     rename("temp.txt", "items.txt");
 
     if(found){
+        system("CLS");
         cout<<"------Product removed-------"<<endl;
     }else{
         cout<<"-------Product not found-------"<<endl;
