@@ -12,6 +12,7 @@ void reg();
 void finding_pass();
 
 // The store
+// Admin
 void automation();
 void add_item();
 void modify_item();
@@ -19,6 +20,9 @@ void display_sp();
 void display_items();
 void update_item();
 void delete_item();
+
+// Customers
+
 
 // class Inventory
 // {

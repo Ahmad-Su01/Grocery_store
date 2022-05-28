@@ -122,6 +122,7 @@ void Inventory::add_item(){
             cout<<"---------Item added successfully---------"<<endl;
             cout<<endl;
             cout<<endl;
+            system("Cls");
         }
         wf.close();
         system("CLS");
@@ -170,21 +171,28 @@ void Inventory::display_sp(){
 
     ifstream f;
 
+    int id;
+    string name;
+    float price;
+    int quantity;
+
     int n, flag = 0;
     cout<<"Enter the product id:"<<endl;
     cin>>n;
 
     f.open("items.txt", ios::in);
     
-    while(f.read((char*)&item1, sizeof(item1))){
-        if(item1.get_id() == n){
-            item1.display_data();
+    while(f >> id >> name >> price >> quantity){
+        if(n == id){
+            cout << id << " - " << name << " - " << price << " - " << quantity << endl;
+            f.close();
             flag = 1;
         }
     }
-    f.close();
 
-    if(flag == 0){
+    if(flag == 1){
+        cout<<"-----Product found!-----"<<endl;
+    }else{
         cout<<"-----Product not found!-----"<<endl;
     }
 
@@ -192,62 +200,81 @@ void Inventory::display_sp(){
 
 void Inventory::modify_item(){
 
+    int id;
+    string name;
+    float price;
+    int quantity;
+    int in_id, found = 0;
+
     ifstream f;
+    ofstream f2("temp.txt");
 
-    int id, found = 0;
+    f.open("items.txt", ios::in );
 
-    cout<<"enter product id to modify: ";
-    cin>>id;
+    cout<<"Enter product id to modify: ";
+    cin>>in_id;
 
-    f.open("items.txt", ios::in | ios::out);
+    while(f >> id >> name >> price >> quantity){
 
-    while(f.read((char*)&item1, sizeof(item1))){
-        if(item1.get_id() == id){
-            item1.display_data();
+        if(id != in_id){
+            f2<< id <<" "<< name <<" "<< price <<" "<< quantity<< endl;
+        }else{
+            cout<< id << " - "<<name<< " - "<< price << " - "<<quantity<<endl;
             cout<<"Please enter new data:\n" << endl;
             item1.get_data(); // Inputing Data
-
-            int pos = -1*((int)sizeof(item1));
-            f.seekp(pos, ios::cur);
-            f.write((char*)&item1, sizeof(item1));
-
+            f2<<item1.get_id() << " "<<item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
             found = 1;
             cout<<"Item " << item1.get_name() << " updated" << endl;
         }
     }
     f.close();
+    f2.close();
+
+    
+    remove("items.txt");
+    rename("temp.txt", "items.txt");
+
     if(found == 0){
         cout<<"------Product not found"<<endl;
     }
+    cout<<"DONE!"<<endl;
 }
 
 void Inventory::delete_item(){
 
     int id;
+    int in_id;
     int found = 0;
+    string name;
+    float price;
+    int quantity;
 
-    ifstream f;
-    ofstream f2;    
-    f2.open("temp.txt",ios::out);
-    f.seekgetline(f, );
+    cout<<"Enter product id to remove: ";
+    cin>>in_id;
+
+    ifstream fin;
+    ofstream f2("temp.txt");
+
+    fin.open("items.txt", ios::in);
+
+    fin.seekg(0, ios::beg);
     
-    while(f.read((char*)&item1, sizeof(item1))){
-
-        if(item1.get_id() != id){
-            f2.write((char*)&item1, sizeof(item1));
+    while(fin >> id >> name >> price >> quantity){
+        if(id != in_id){
+            f2<< id <<" "<< name <<" "<< price <<" "<< quantity<<endl;
         }
-
-        if(item1.get_id() == id){
+        if(id == item1.get_id()){
             found = 1;
         }
-    }
+    } 
+
+    fin.close();
     f2.close();
-    f.close();
 
     remove("items.txt");
     rename("temp.txt", "items.txt");
-
-    if(found){
+  
+    if(found == 1){
         system("CLS");
         cout<<"------Product removed-------"<<endl;
     }else{
