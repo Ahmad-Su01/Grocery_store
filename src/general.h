@@ -6,6 +6,9 @@ using namespace std;
 #ifndef _GENERAL_H
 #define _GENERAL_H
 
+// Main file
+int main();
+
 // Authentication
 void login();
 void reg();
@@ -21,23 +24,9 @@ void display_items();
 void update_item();
 void delete_item();
 
-// Customers
-
-
-// class Inventory
-// {
-//     private:
-//         int id;
-//         float price;
-//         string product_name;
-//     public:
-//         void get_data();
-//         void display_data();
-//         void remove();
-//         int get_id();
-//         float get_price();
-//         string get_name();
-
-// };
+// Customer
+void Start();
+void cart_checking();
+void purchase_display();
 
 #endif

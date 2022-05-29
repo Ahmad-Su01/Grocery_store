@@ -95,7 +95,7 @@ void automation()
             case 3: system("CLS"); m.display_sp(); break;
             case 4: system("CLS"); m.modify_item(); break;
             case 5: system("CLS"); m.delete_item(); break;
-            case 6: system("CLS"); choice = 0;break; 
+            case 6: system("CLS"); choice = 0; main();break; 
             default: cout << "The option is not valid!" << endl; break;
         }
     }
@@ -104,7 +104,15 @@ void automation()
 // Your implementation
 void Inventory::add_item(){
     int n;
+    int id;
+    string name;
+    float price;
+    int quantity;
+
     ofstream wf;
+    ifstream rf;
+
+    rf.open("items.txt", ios::in);
 
     cout<<"How many items would you like to add?"<<endl;
     cin>>n;
@@ -117,26 +125,75 @@ void Inventory::add_item(){
         while(n != 0)
         {
             item1.get_data();
-            wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
-            n--;
-            cout<<"---------Item added successfully---------"<<endl;
-            cout<<endl;
-            cout<<endl;
-            system("Cls");
+            bool found = false;
+
+            while(!found && rf >>id>>name>>price>>quantity){
+
+                if(id == item1.get_id())
+                    found = 1;
+                    cout<<"Product ID already exists";
+                    cout<<endl;
+                    cout<<"Id: "<<id<<" - ";
+                    cout<<"Name: "<< name <<" - ";
+                    cout<<"Price: "<<price<<" - ";
+                    cout<<"Quantity: "<<quantity<<endl;
+                        
+            }
+
+            if(!found)
+            {
+                wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
+                n--;
+                cout<<"---------Item added successfully---------"<<endl;
+                cout<<endl;
+                cout<<endl;
+                system("Cls");
+            }
+
         }
+        rf.close();
         wf.close();
         system("CLS");
     }
     // Creatres the if not exists
     else{
         ofstream wf("items.txt");
-        
+        ifstream rf;
+
+        rf.open("items.txt", ios::in);
+
         while(n != 0)
         {
             item1.get_data();
-            wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
-            n--;
+            bool found = false;
+
+            while(!found && rf >>id>>name>>price>>quantity){
+
+                if(id == item1.get_id())
+                    found = 1;
+                    
+            }
+
+            if(!found)
+            {
+                wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
+                n--;
+                cout<<"---------Item added successfully---------"<<endl;
+                cout<<endl;
+                cout<<endl;
+                system("Cls");
+            }else{
+
+                cout<<"Product ID already exists";
+                cout<<endl;
+                cout<<"Id: "<<item1.get_id()<<" - ";
+                cout<<"Name: "<< item1.get_name()<<" - ";
+                cout<<"Price: "<<item1.get_price()<<" - ";
+                cout<<"Quantity: "<<item1.get_quantity()<<endl;
+
+            }
         }
+        rf.close();
         wf.close();
         cout << "Your file has been created"<< endl;
         system("CLS");
@@ -204,11 +261,14 @@ void Inventory::modify_item(){
     string name;
     float price;
     int quantity;
+    bool idf = false;
     int in_id, found = 0;
 
     ifstream f;
     ofstream f2("temp.txt");
+    ifstream f3;
 
+    f3.open("temp.txt", ios::in);
     f.open("items.txt", ios::in );
 
     cout<<"Enter product id to modify: ";
@@ -220,16 +280,38 @@ void Inventory::modify_item(){
             f2<< id <<" "<< name <<" "<< price <<" "<< quantity<< endl;
         }else{
             cout<< id << " - "<<name<< " - "<< price << " - "<<quantity<<endl;
+            found = 1;
             cout<<"Please enter new data:\n" << endl;
             item1.get_data(); // Inputing Data
-            f2<<item1.get_id() << " "<<item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
-            found = 1;
-            cout<<"Item " << item1.get_name() << " updated" << endl;
+
+            while(!idf && f3 >> id >> name >> price >> quantity){
+
+                if(id == item1.get_id())
+                    idf = 1;
+                    cout<<"Product ID already exists";
+                    cout<<endl;
+                    cout<<"Id: "<<id <<" - ";
+                    cout<<"Name: "<< name <<" - ";
+                    cout<<"Price: "<<price<<" - ";
+                    cout<<"Quantity: "<<quantity<<endl;
+
+            }
+
+            if(!idf)
+            {
+                f2<<item1.get_id() << " "<<item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
+                cout<<"Item " << item1.get_name() << " updated" << endl;
+                cout<<"---------Item added successfully---------"<<endl;
+                cout<<endl;
+                cout<<endl;
+                system("Cls");
+
+            }
         }
     }
     f.close();
     f2.close();
-
+    f3.close();
     
     remove("items.txt");
     rename("temp.txt", "items.txt");
@@ -237,7 +319,7 @@ void Inventory::modify_item(){
     if(found == 0){
         cout<<"------Product not found"<<endl;
     }
-    cout<<"DONE!"<<endl;
+
 }
 
 void Inventory::delete_item(){

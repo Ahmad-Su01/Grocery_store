@@ -49,7 +49,7 @@ void login(){
         system("CLS");
         cout << "You are an admin"<< endl;
         automation();
-        return;
+        //return;
     }
 
     // Ahmad from here!
@@ -80,7 +80,7 @@ void login(){
     {
         system("CLS");
         cout << "\t\t Welcome at the grocery store\n\t\t  Feel free to buy our stuff" << endl;
-        //main();
+        Start();
     }
     else{
         system("CLS");
