@@ -1,10 +1,10 @@
 1 Artichoke 10 20
 2 Asparagus 7 20
-3 Bean Sprouts 12 20   
+3 Bean 12 20   
 4 Beans 4 20   
-5 Bell Pepper 6 20    
+5 Bell-Pepper 6 20    
 6 Broccoli 20 20   
-7 Brussels Sprouts 17 20  
+7 Brussels 17 20  
 8 Cabbage 11 20    
 9 Carrot 5 20   
 10 Cauliflower 6 20   
@@ -36,6 +36,5 @@
 36 Pumpkin 14 20   
 37 Radish 10 20    
 38 Spinach 8 20    
-39 Sweet Potato 20 20    
-40 Tomato 10 20    
-41 Zucchini 12 20 
+39 Tomato 10 20    
+40 Zucchini 12 20 
