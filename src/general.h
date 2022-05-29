@@ -28,5 +28,9 @@ void delete_item();
 void Start();
 void cart_checking();
 void purchase_display();
+void backStart();
+void fruits_veggies();
+void copy_fruits();
+void copy_veggies();
 
 #endif
