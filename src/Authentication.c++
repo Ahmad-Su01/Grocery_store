@@ -2,6 +2,7 @@
 #include <string>
 #include <regex>
 #include <stdlib.h>
+#include <iomanip>
 
 // files
 #include <fstream>
@@ -80,7 +81,7 @@ void login(){
     {
         system("CLS");
         cout << "\t\t Welcome at the grocery store\n\t\t  Feel free to buy our stuff" << endl;
-        Start();
+        Start(email);
     }
     else{
         system("CLS");
@@ -213,6 +214,35 @@ void finding_pass()
         system("CLS");
         cout << "Your email does not exists" << endl;
         return finding_pass();
+    }
+}
+
+void Bills(){
+    string all;
+
+    system("CLS");
+
+    ifstream f;
+    f.open("bill.txt", ios::in);
+
+    if(f.is_open())
+    {
+        while(getline(f, all))
+        {
+            cout << all << endl;
+        }
+        f.close();
+        cout << endl << endl;
+        cin.get();
+        cin.get();
+        system("ClS");
+    }
+    else{
+        cout << "There are no bills!" << endl;
+        cout << endl << endl;
+        cin.get();
+        cin.get();
+        system("ClS");
     }
 }
 

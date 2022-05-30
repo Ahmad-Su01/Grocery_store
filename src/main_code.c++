@@ -8,15 +8,16 @@ int main()
     int num;
     int check = 0;
 
+    system("CLS");
     while(true )
     {
-        system("CLS");
         cout << "\t\tWelcome at the Grocery Store" <<endl;
         cout << "\t\t Please choose a valid option" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
         cout << "3. Forgot password" << endl;
-        cout << "4. Exit" << endl;
+        cout << "4. All Bills" << endl;
+        cout << "5. Exit" << endl;
         cout << "Please choose one of the options:" << endl;
         cin >> num;
 
@@ -39,7 +40,10 @@ int main()
                 cout << "\t\t Forgot the password?" <<endl;
                 cout << "\t\tInput the required credentails!" << endl;
                 finding_pass(); break;
-            case 4: 
+            case 4:
+                system("CLS");
+                Bills(); break;
+            case 5: 
                 system("CLS");exit(0); break;
             default: 
                 cout << "Proivde a valid option" << endl; break;

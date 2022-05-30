@@ -1,3 +1,0 @@
-berry 270 -10
-banana 18 17
-Apple 10 18
