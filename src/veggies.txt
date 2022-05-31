@@ -1,6 +1,6 @@
 1 Artichoke 10 0
 2 Asparagus 7 0
-3 Bean 12 16
+3 Bean 12 15
 4 Beans 4 0
 5 Bell-Pepper 6 20
 6 Broccoli 20 19
