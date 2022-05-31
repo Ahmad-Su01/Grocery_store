@@ -62,16 +62,18 @@ void Start(string email)
 
     while(join != 0)
     {
+        cout << "Welcome " << email << "to the store" << endl;
         cout << "1. Cart" <<endl; // see the chosen products
         cout << "2. Display the Grocery products"<<endl; // I want to see the products and adding them in cart
         cout << "3. Log Out" <<endl; // Logs out from the system
+        cout << "Choose your option: ";
         cin >> n;
 
         switch(n){
             case 1: system("CLS"); co.cart_checking(); break;
             case 2: system("CLS"); co.purchase_display(); break;
             case 3: system("CLS"); co.backStart(); break;
-            default: system("CLS"); cout << "Not an option" << endl; break;
+            default: system("CLS"); cout << "Not an option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 }
@@ -126,17 +128,19 @@ void Customer::purchase_display(){
 
     while(choice != 0)
     {
+        cout << right << setw(30) << "Pick your category" << endl;
         cout << "1. Fruits" << endl;
         cout << "2. Veggies" << endl;
         cout << "3. Back" << endl;
+        cout << "Choose your option: ";
         cin >> n;
 
         switch(n)
         {
             case 1: m.Fruits_taken(); break;
             case 2: m.Veggies_taken(); break;
-            case 3: Start(email_taken); break;
-            default: cout << "Choose the option" << endl; break;
+            case 3: system("CLS"); Start(email_taken); break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 }
@@ -148,6 +152,7 @@ void Customer::Payment_taken(const char* file)
     string name;
     float price;
 
+    bool exists = false;
     int price_taken = 0, quantity_taken = 0;
 
     ofstream f2("temp_2.txt");
@@ -190,6 +195,8 @@ void Customer::Payment_taken(const char* file)
     {
         if(a == id)
         {
+            exists = true;
+
             cout << endl;
             cout << "Product: " << name << endl;
             cout << "Price: " << price << endl;
@@ -215,6 +222,14 @@ void Customer::Payment_taken(const char* file)
             Total += price_taken;
         }
         f2<< id <<" "<< name <<" "<< price <<" "<< quantity <<endl;
+    }
+    if(exists == false){
+        system("CLS");
+        cout << "Product  doesn't exists" << endl;
+        cin.get();
+        cin.get();
+        system("CLS");
+        return purchase_display();
     }
     f1.close();
     f2.close();
@@ -248,8 +263,10 @@ void Customer::Payment_taken(const char* file)
 
 void Customer:: backStart(){
     string name;
-    float price;
+    long int price;
     int quantity;
+
+    int n = 0;
 
     if(Total == 0)
     {
@@ -264,10 +281,18 @@ void Customer:: backStart(){
 
         ofstream wf;
         wf.open("bill.txt", ios::app);
-        
+
         while(f1 >> name >> price >> quantity)
-        {wf << left << setw(32) << email_taken << left << setw(25) << name << left << setw(18) << price << left << setw(15) << quantity <<endl;}
-        wf << "Total: " << Total <<endl;
+        {
+            if(n == 0)
+            {
+                wf << left << setw(32) << email_taken;
+                wf << left << setw(25) << name << left << setw(18) << price << left << setw(15) << quantity <<endl;
+                n = 1;
+            }
+            wf << right << setw(37) << name << left << setw(20) << " " << left << setw(18) << price << left << setw(17) << quantity <<endl;
+        }
+        wf << right << setw(42) << "Total: " << Total <<endl;
         wf << "---------------------------------------------------------------------------------" << endl;
         wf.close();
         wf.open("Customer.txt", ios::trunc);
@@ -285,10 +310,19 @@ void Customer:: backStart(){
         f1.open("Customer.txt", ios::in);
         
         wf << "----------------------------------BILL-------------------------------------------" << endl;
-        wf  << left << setw(32)<< "Email"<< left << setw(25) <<  "Product Name" << setw(32) <<left << setw(18) << "Price" << left << setw(15)<< "Quantity" <<endl;
+        wf << left << setw(32)<< "Email"<< left << setw(25) <<  "Product Name" << setw(32) <<left << setw(18) << "Price" << left << setw(15)<< "Quantity" <<endl;
         while(f1 >> name >> price >> quantity)
-        {wf << left << setw(32) << email_taken << left << setw(25) << name << left << setw(18) << price << left << setw(15) << quantity <<endl;}
-        wf << "Total: " << Total <<endl;
+        {
+            if(n == 0)
+            {
+                wf << left << setw(32) << email_taken;
+                wf << left << setw(25) << name << left << setw(18) << price << left << setw(15) << quantity <<endl;
+                n = 1;
+            }
+            wf << right << setw(37) << name << left << setw(20) << " " << left << setw(18) << price << left << setw(17) << quantity <<endl;
+        }
+        wf << right << setw(42) << "Total: " << Total <<endl;
+        wf << " " << right << setw(50) << "Total: " << Total <<endl;
         wf << "---------------------------------------------------------------------------------" << endl;
         wf.close();
 

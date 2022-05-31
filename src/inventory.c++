@@ -106,7 +106,7 @@ void automation()
             case 4: system("CLS"); m.modify_choice(); break;
             case 5: system("CLS"); m.delete_choice(); break;
             case 6: system("CLS"); choice = 0; main();break; 
-            default: cout << "The option is not valid!" << endl; break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 }
@@ -123,14 +123,15 @@ void Inventory::Sp_chioce(){
         cout << "1. Fruits" << endl;
         cout << "2. Veggies" << endl;
         cout << "3. Back" << endl;
+        cout << "Choose an option: " << endl;
         cin >> n;
 
         switch(n)
         {
             case 1: display_sp(file); break;
             case 2: display_sp(file2); break;
-            case 3: automation(); break;
-            default: cout << "Choose the option" << endl; break;
+            case 3: system("CLS");automation(); break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 
@@ -148,14 +149,15 @@ void Inventory::delete_choice(){
         cout << "1. Fruits" << endl;
         cout << "2. Veggies" << endl;
         cout << "3. Back" << endl;
+        cout << "Choose an option: ";
         cin >> n;
 
         switch(n)
         {
             case 1: delete_item(file); break;
             case 2: delete_item(file2); break;
-            case 3: automation(); break;
-            default: cout << "Choose the option" << endl; break;
+            case 3: system("CLS");automation(); break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 
@@ -173,21 +175,20 @@ void Inventory::modify_choice(){
         cout << "1. Fruits" << endl;
         cout << "2. Veggies" << endl;
         cout << "3. Back" << endl;
+        cout << "Choose an option: ";
         cin >> n;
 
         switch(n)
         {
             case 1: modify_item(file); break;
             case 2: modify_item(file2); break;
-            case 3: automation(); break;
-            default: cout << "Choose the option" << endl; break;
+            case 3: system("CLS");automation(); break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 
 }
 
-
-// Your implementation
 void Inventory::add_item(){
 
     Inventory m;
@@ -200,14 +201,15 @@ void Inventory::add_item(){
         cout << "1. Fruits" << endl;
         cout << "2. Veggies" << endl;
         cout << "3. Back" << endl;
+        cout << "Choose an option: ";
         cin >> n;
 
         switch(n)
         {
             case 1: Decision(file); break;
             case 2: Decision(file2); break;
-            case 3: automation(); break;
-            default: cout << "Choose the option" << endl; break;
+            case 3: system("CLS");automation(); break;
+            default: system("CLS"); cout << "Wrong option!" << endl; cin.get(); cin.get(); system("CLS"); break;
         }
     }
 }
@@ -226,6 +228,7 @@ void Inventory::Decision(const char* file)
     rf.open(file, ios::in);
 
     cout<<"How many items would you like to add?"<<endl;
+    cout << "Input: ";
     cin>>n;
     // Ahmad Method
     if((_access(file, 0)) != -1){
@@ -241,6 +244,7 @@ void Inventory::Decision(const char* file)
             while(!found && rf >>id>>name>>price>>quantity){
 
                 if(id == item1.get_id())
+                {
                     found = 1;
                     cout<<"Product ID already exists";
                     cout<<endl;
@@ -248,17 +252,19 @@ void Inventory::Decision(const char* file)
                     cout<<"Name: "<< name <<" - ";
                     cout<<"Price: "<<price<<" - ";
                     cout<<"Quantity: "<<quantity<<endl;
-                        
+                }       
             }
 
             if(!found)
             {
                 wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
                 n--;
-                system("ClS");
+                //system("ClS");
+                cout << endl;
                 cout<<"---------Item added successfully---------"<<endl;
-                cout<<endl;
-                cout<<endl;
+                cin.get();
+                cin.get();
+                system("CLS");
             }
 
         }
@@ -287,10 +293,11 @@ void Inventory::Decision(const char* file)
             {
                 wf<<item1.get_id() <<" "<< item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
                 n--;
+                cout << endl;
                 cout<<"---------Item added successfully---------"<<endl;
-                cout<<endl;
-                cout<<endl;
-                system("Cls");
+                cin.get();
+                cin.get();
+                system("ClS");
             }else{
 
                 cout<<"Product ID already exists";
@@ -308,15 +315,7 @@ void Inventory::Decision(const char* file)
         system("CLS");
     }
 }
-/* 
-void Inventory::Fruits(){
-    
-}
 
-void Inventory::Veggies(){
-    
-}
- */
 void Inventory::display_items(){
     int id;
     string name;
@@ -382,13 +381,24 @@ void Inventory::display_sp( const char* file){
     }
 
     if(flag == 1){
-        cout<<"-----Product found!-----"<<endl;
+        cout<<"------Product found!-------"<<endl;
+        cin.get();
+        cin.get();
+        system("CLS");
     }else{
-        cout<<"-----Product not found!-----"<<endl;
+        system("CLS");
+        cout<<"-------Product not found-------"<<endl;
+        cin.get();
+        cin.get();
+        system("CLS");
     }
 
+    cin.get();
+    cin.get();
+    system("CLS");
 }
 
+// AHMAD!
 void Inventory::modify_item(const char* file){
 
     int id;
@@ -419,27 +429,19 @@ void Inventory::modify_item(const char* file){
             item1.get_data(); // Inputing Data
 
             while(!idf && f3 >> id >> name >> price >> quantity){
-
                 if(id == item1.get_id())
+                {
                     idf = 1;
-                    cout<<"Product ID already exists";
-                    cout<<endl;
                     cout<<"Id: "<<id <<" - ";
                     cout<<"Name: "<< name <<" - ";
                     cout<<"Price: "<<price<<" - ";
                     cout<<"Quantity: "<<quantity<<endl;
-
+                }
             }
 
             if(!idf)
             {
                 f2<<item1.get_id() << " "<<item1.get_name()<<" "<<item1.get_price()<<" "<<item1.get_quantity()<<endl;
-                cout<<"Item " << item1.get_name() << " updated" << endl;
-                cout<<"---------Item added successfully---------"<<endl;
-                cout<<endl;
-                cout<<endl;
-                system("Cls");
-
             }
         }
     }
@@ -450,8 +452,15 @@ void Inventory::modify_item(const char* file){
     remove(file);
     rename("temp.txt", file);
 
-    if(found == 0){
-        cout<<"------Product not found"<<endl;
+    if(found == 1){
+        cout<<"------Product updated-------"<<endl;
+        cin.get();
+        system("CLS");
+    }else{
+        system("CLS");
+        cout<<"-------Product not found-------"<<endl;
+        cin.get();
+        system("CLS");
     }
 }
 
@@ -475,12 +484,11 @@ void Inventory::delete_item(const char* file){
     fin.seekg(0, ios::beg);
     
     while(fin >> id >> name >> price >> quantity){
-        if(id != in_id){
-            f2<< id <<" "<< name <<" "<< price <<" "<< quantity<<endl;
-        }
         if(id == item1.get_id()){
             found = 1;
         }
+        f2<< id <<" "<< name <<" "<< price <<" "<< quantity<<endl;
+
     } 
 
     fin.close();
@@ -492,8 +500,14 @@ void Inventory::delete_item(const char* file){
     if(found == 1){
         system("CLS");
         cout<<"------Product removed-------"<<endl;
+        cin.get();
+        cin.get();
+        system("CLS");
     }else{
+        system("CLS");
         cout<<"-------Product not found-------"<<endl;
+        cin.get();
+        cin.get();
+        system("CLS");
     }
-
 }

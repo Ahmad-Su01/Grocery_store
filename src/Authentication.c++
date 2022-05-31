@@ -34,7 +34,10 @@ void login(){
         system("CLS");
         cout << "The email doesn't exist!" << endl;
         cout << "Try again! or exit from the login page"<<endl;
-        cout << "by writting exit either in email or in password" << endl;
+        cout << "by writting exit in email or in password" << endl;
+        cin.get();
+        cin.get();
+        system("CLS");
         return login();
     }
     cout<<"Password: ";
@@ -64,6 +67,9 @@ void login(){
         cerr << "*        The file doesn't exists!       *" << endl;
         cerr << "*****************************************"<< endl;
         cout << endl;
+        cin.get();
+        cin.get();
+        system("CLS");
         return login();
     }
 
@@ -87,6 +93,9 @@ void login(){
         system("CLS");
         cout << "Wrong Credentials" << endl;
         rf.close();
+        cin.get();
+        cin.get();
+        system("CLS");
         return login();
     }
 }
@@ -143,6 +152,9 @@ void reg()
         cerr << "*  Please input more than 8 characters  *" << endl;
         cerr << "*****************************************"<< endl;
         cout << endl;
+        cin.get();
+        cin.get();
+        system("CLS");
         return reg();
     }
     cout <<"Retry Password: ";
@@ -155,6 +167,9 @@ void reg()
         cerr << "*  The passwords didn't match! *" << endl;
         cerr << "********************************"<< endl;
         cout << endl;
+        cin.get();
+        cin.get();
+        system("CLS");
         return reg();
     }
 
